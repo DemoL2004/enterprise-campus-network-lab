@@ -12,7 +12,7 @@ The project focuses not only on configuration but also on troubleshooting protoc
 
 ## Network Topology
 
-![Enterprise Topology](diagrams/topolgy.png)
+![Enterprise Topology](diagrams/toplogy.png)
 
 ---
 
