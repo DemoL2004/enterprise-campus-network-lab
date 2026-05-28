@@ -1,0 +1,122 @@
+!
+version 15.1
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname ENG
+!
+!
+!
+enable secret 5 $1$mERr$sOPVMGxRNnF1WyZaqfnk10
+!
+!
+!
+!
+!
+!
+ip cef
+ipv6 unicast-routing
+!
+no ipv6 cef
+!
+ipv6 dhcp pool ENG6
+ address prefix 2001:20::/64 lifetime 172800 86400
+ dns-server 2001:50::50
+ domain-name eng
+!
+!
+!
+username Piyush secret 5 $1$mERr$sOPVMGxRNnF1WyZaqfnk10
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524BY2E-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+ip domain-name ENG
+ip name-server 192.168.50.50
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 192.168.0.1 255.255.255.240
+ duplex auto
+ speed auto
+ ipv6 address 2001::20/64
+ ipv6 address autoconfig
+ ipv6 ospf 1 area 0
+ ipv6 address dhcp
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ ip address 192.168.20.1 255.255.255.0
+ ip helper-address 192.168.10.1
+ duplex auto
+ speed auto
+ ipv6 address 2001:20::1/64
+ ipv6 nd other-config-flag
+ ipv6 ospf 1 area 0
+ ipv6 dhcp server ENG6
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 2.2.2.2
+ log-adjacency-changes
+ network 192.168.0.0 0.0.0.3 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 192.168.0.0 0.0.0.15 area 0
+!
+ipv6 router ospf 1
+ router-id 2.2.2.2
+ log-adjacency-changes
+ redistribute connected 
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+snmp-server community ENG RW
+!
+logging 192.168.50.50
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+ntp server 192.168.50.50
+ntp update-calendar
+!
+end
+

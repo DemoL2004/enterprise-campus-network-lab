@@ -1,0 +1,113 @@
+!
+version 15.0
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW_CE
+!
+!
+!
+ip ssh version 2
+ip domain-name CE_SW
+!
+username Piyush secret 5 $1$mERr$sOPVMGxRNnF1WyZaqfnk10
+!
+ip arp inspection vlan 1
+!
+ip dhcp snooping vlan 1
+no ip dhcp snooping information option
+ip dhcp snooping
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast bpduguard default
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ ip arp inspection trust
+ ip dhcp snooping trust
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/2
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet0/2
+ switchport mode access
+ spanning-tree portfast
+!
+interface Vlan1
+ ip address 192.168.0.10 255.255.255.240
+!
+ip default-gateway 192.168.0.2
+!
+logging 192.168.50.50
+!
+!
+snmp-server community SW_CE RW
+!
+line con 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+!
+ntp server 192.168.50.50
+!
+end
+
